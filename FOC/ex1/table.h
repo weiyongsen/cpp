@@ -7,8 +7,7 @@ string signal_comparison = "<>=!";
 vector<string> key{"const","int","char","void",
 "main","if","else","switch","case",
 "default","while","for",
-"scanf","printf","printF","PRINTF","return",
-"coNst"}; // 关键字列表
+"scanf","printf","return"}; // 关键字列表
 
 map<string,string> table = {
     {"标识符",	"IDENFR"},	
@@ -27,8 +26,7 @@ map<string,string> table = {
     {"default",	"DEFAULTTK"},	
     {"<",	"LSS"},	
     {"(",	"LPARENT"},
-    {"const",	"CONSTTK"},	
-    {"coNst",	"CONSTTK"},	
+    {"const",	"CONSTTK"},		
     {"while",	"WHILETK"},	
     {"<=",	"LEQ"},	
     {")",	"RPARENT"},
@@ -42,8 +40,6 @@ map<string,string> table = {
     {"]",	"RBRACK"},
     {"void",	"VOIDTK"},	
     {"printf",	"PRINTFTK"},	
-    {"printF",	"PRINTFTK"},
-    {"PRINTF",	"PRINTFTK"},
     {"==",	"EQL"},	
     {"{",	"LBRACE"},
     {"main",	"MAINTK"},	

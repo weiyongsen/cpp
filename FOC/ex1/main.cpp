@@ -22,17 +22,16 @@ int main(){
 	ifstream infile; 
 	infile.open("testfile.txt");
     
-	
-	// get the input symbols
+	// 写入buffer
 	infile >> noskipws;
 	while (infile.peek()!=EOF){
 		infile >> c;
 		buffer += c;
-	}// while
+	}
 	infile.close();  
     
 
-	string token="";	// 正在识别的单词
+	string token="";	// 正在识别的单词，c是字符
 	int forward = 0; 	// 向前指针
 	int buffer_size = buffer.size();	// 总长度
 
@@ -101,11 +100,13 @@ int main(){
 				token += buffer[forward];
 			}
 			--forward;
+			string temp = token;	// 保留token原有格式，向name中填写
+			transform(token.begin(),token.end(),token.begin(),::tolower);	// token变为小写,关键字识别用小写
 			if(find(key.begin(),key.end(),token) != key.end()){
-				name.emplace_back(token);
+				name.emplace_back(temp);
 				category.emplace_back(table[token]);
 			}else{
-				name.emplace_back(token);
+				name.emplace_back(temp);
 				category.emplace_back(table["标识符"]);
 			}
 		}
