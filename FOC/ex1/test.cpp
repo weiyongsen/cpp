@@ -21,13 +21,14 @@ int main(){
 		else
 			buffer+=c;
 	}
-	cout << buffer << endl;
+	// cout << buffer << endl;
     
 
 	string token="";	// 正在识别的单词
 	int forward = 0; 	// 向前指针
 	int buffer_size = buffer.size();	// 总长度
 
+	cout << "analyse begin:" << endl;
 	// 开始逐字符判断
 	while(forward < buffer_size){
 		token += buffer[forward];  //更新token
@@ -38,10 +39,10 @@ int main(){
 			category.emplace_back(table[token]);
 		}
 
-		// 比较运算符    先判断 <,>,= 再判断 <=,>=,==
+		// 比较运算符    先判断 <,>,=,! 再判断 <=,>=,==,!=
 		if(signal_comparison.find(token)!=signal_comparison.npos){
 			token += buffer[++forward];
-			if(token == "<=" || token==">=" || token=="==" || token=="!="){
+			if(find(double_cocmparison.begin(),double_cocmparison.end(),token) != double_cocmparison.end()){
 				name.emplace_back(token);
 				category.emplace_back(table[token]);
 			}else{
@@ -87,27 +88,29 @@ int main(){
 			// cout << "已添加进容器" << endl;
 		}
 		
-		// 判断关键字
+		// 判断关键字 或 标识符
 		if(isalpha(buffer[forward]) || buffer[forward]=='_'){
 			while(isalnum(buffer[++forward]) || buffer[forward]=='_'){
 				token += buffer[forward];
 			}
 			--forward;
-			if(find(key.begin(),key.end(),token) != key.end()){
-				name.emplace_back(token);
+			string temp = token;	// 保留token原有格式，向name中填写
+			transform(token.begin(),token.end(),token.begin(),::tolower);	// token变为小写,关键字识别用小写
+			if(find(key_word.begin(),key_word.end(),token) != key_word.end()){
+				name.emplace_back(temp);
 				category.emplace_back(table[token]);
 			}else{
-				name.emplace_back(token);
+				name.emplace_back(temp);
 				category.emplace_back(table["标识符"]);
 			}
 		}
 		// 重置token, 指针后移
 		token = "";
-		
 		++forward;
 	}
-
+	
 	print();
 	// cout << "长度:" <<category.size() << " " << name.size() << endl;
+	cout << "analyse complete..." << endl;
     return 0;
 }

@@ -1,15 +1,15 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-string signal_char = "+-*/:;,()[]{}";
-string signal_comparison = "<>=!";
-
-vector<string> key{"const","int","char","void",
+string signal_char = "+-*/:;,()[]{}";   // 单个处理的字符
+string signal_comparison = "<>=!";      // 单目比较运算字符 
+vector<string> double_cocmparison {"<=",">=","==","!="};    // 双目比较运算字符 
+vector<string> key_word{"const","int","char","void",
 "main","if","else","switch","case",
 "default","while","for",
 "scanf","printf","return"}; // 关键字列表
 
-map<string,string> table = {
+map<string,string> table = {    // 词类编码表
     {"标识符",	"IDENFR"},	
     {"else",	"ELSETK"},	
     {"-",	"MINU"},	

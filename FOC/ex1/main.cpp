@@ -7,18 +7,16 @@ vector<string> category;
 void print(){
 	ofstream outfile;
 	outfile.open("output.txt");
-	
 	for (int i = 0; i < name.size(); i++){
 		outfile << category[i] << " " << name[i] << endl;
-	}// for
-
+	}
 	outfile.close();
 }
 
 int main(){
     char c = '\0';
 	string buffer;
-
+	// 读入文件
 	ifstream infile; 
 	infile.open("testfile.txt");
     
@@ -29,7 +27,6 @@ int main(){
 		buffer += c;
 	}
 	infile.close();  
-    
 
 	string token="";	// 正在识别的单词，c是字符
 	int forward = 0; 	// 向前指针
@@ -45,10 +42,10 @@ int main(){
 			category.emplace_back(table[token]);
 		}
 
-		// 比较运算符    先判断 <,>,= 再判断 <=,>=,==
+		// 比较运算符    先判断 <,>,=,! 再判断 <=,>=,==,!=
 		if(signal_comparison.find(token)!=signal_comparison.npos){
 			token += buffer[++forward];
-			if(token == "<=" || token==">=" || token=="==" || token=="!="){
+			if(find(double_cocmparison.begin(),double_cocmparison.end(),token) != double_cocmparison.end()){
 				name.emplace_back(token);
 				category.emplace_back(table[token]);
 			}else{
@@ -94,7 +91,7 @@ int main(){
 			// cout << "已添加进容器" << endl;
 		}
 		
-		// 判断关键字
+		// 判断关键字 或 标识符
 		if(isalpha(buffer[forward]) || buffer[forward]=='_'){
 			while(isalnum(buffer[++forward]) || buffer[forward]=='_'){
 				token += buffer[forward];
@@ -102,7 +99,7 @@ int main(){
 			--forward;
 			string temp = token;	// 保留token原有格式，向name中填写
 			transform(token.begin(),token.end(),token.begin(),::tolower);	// token变为小写,关键字识别用小写
-			if(find(key.begin(),key.end(),token) != key.end()){
+			if(find(key_word.begin(),key_word.end(),token) != key_word.end()){
 				name.emplace_back(temp);
 				category.emplace_back(table[token]);
 			}else{
