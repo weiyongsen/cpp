@@ -6,7 +6,7 @@ vector<string> category;
 
 void print(){
 	ofstream outfile;
-	outfile.open("output.txt");
+	outfile.open("token.txt");
 	for (int i = 0; i < name.size(); i++){
 		outfile << category[i] << " " << name[i] << endl;
 	}
